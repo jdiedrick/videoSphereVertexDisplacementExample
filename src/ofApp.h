@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
+#include "ofxGameCamera.h"
 
 class ofApp : public ofBaseApp{
 
@@ -20,8 +21,18 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
     
         ofVideoPlayer player;
+
+        ofImage image;
+    
         ofShader shader;
+        ofShader shader2;
     
         ofSpherePrimitive sphere;
+        ofSpherePrimitive sphere2;
+    
+        bool useImage;
+        bool useClouds;
+    
+        ofEasyCam cam;
 		
 };

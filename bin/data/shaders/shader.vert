@@ -7,7 +7,7 @@ uniform mat4 projectionMatrix;
 uniform mat4 textureMatrix;
 uniform mat4 modelViewProjectionMatrix;
 
-const float magnitude = 3.0;
+const float magnitude = 0.5;
 
 vec4 pixel;
 
@@ -45,11 +45,6 @@ void main()
     dv = dv * magnitude;
     
 	displace = vec4(normalize(normal) * dv);
-
-
-    
-    
-
     
     // send the vertices to the fragment shader
     //gl_Position = modelViewProjectionMatrix * position;

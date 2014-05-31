@@ -2,16 +2,39 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+    
+    //bools
+    useImage = false;
+    useClouds = true;
+    
     ofBackground(0, 0, 0);
+    
+    //load video
     player.loadMovie("kill_la_kill.mp4");
     player.play();
+    player.setVolume(1.0);
     
-    //load shaders
-    shader.load("shaders/shader.vert", "shaders/shader.frag");
+    //load image
+    image.loadImage("miku.jpeg");
     
     //setup sphere
-    sphere.set(500, 50);
-    sphere.mapTexCoordsFromTexture(player.getTextureReference());
+    sphere.set(20, 200);
+    
+    
+    //load shaders
+    if(useClouds) shader.load("shaders/clouds");
+    if(!useClouds) shader.load("shaders/shader.vert", "shaders/shader.frag");
+    
+    
+    if(useImage) sphere.mapTexCoordsFromTexture(image.getTextureReference());
+    if(!useImage) sphere.mapTexCoordsFromTexture(player.getTextureReference());
+
+    //cam.setup();
+    
+    sphere2.set(20, 200);
+    shader2.load("shaders/shader");
+    sphere2.mapTexCoordsFromTexture(player.getTextureReference());
+
 
 }
 
@@ -23,15 +46,32 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
     
-    sphere.setPosition(ofGetWidth()/2, ofGetHeight()/2, 0);
+    //cam.begin();
+    sphere.setPosition((ofGetWidth()/2)-25, ofGetHeight()/2, 400); //change z index
     sphere.rotate(1, 1.0, 0.0, 0.0);
     sphere.rotate(1, 0, 1.0, 0.0);
     
     shader.begin();
-    shader.setUniformTexture("tex0", player.getTextureReference(), 0);
+    if(useImage) shader.setUniformTexture("tex0", image.getTextureReference(), 0);
+    if(!useImage) shader.setUniformTexture("tex0", player.getTextureReference(), 0);
+
     sphere.draw();
     shader.end();
     
+    
+    //cam.begin();
+    sphere2.setPosition((ofGetWidth()/2)+25, ofGetHeight()/2, 400); //change z index
+    sphere2.rotate(1, 1.0, 0.0, 0.0);
+    sphere2.rotate(1, 0, 1.0, 0.0);
+    
+    shader2.begin();
+    shader2.setUniformTexture("tex0", player.getTextureReference(), 0);
+    
+    sphere2.draw();
+    shader2.end();
+    
+    
+    //cam.end();
     //player.draw(0,0);
     
     /*
